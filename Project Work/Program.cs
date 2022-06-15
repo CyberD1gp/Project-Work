@@ -12,7 +12,7 @@ namespace Project_Work
             while (true)
             {
                 string txt;
-                Console.WriteLine("\nвведите Запись(z) или  Чтение(c)");
+                Console.WriteLine("\nвведите Запись(z) , Чтение(c) , Сортировка дат в диапозоне(s)");
                 txt = Console.ReadLine();
                 if (txt == "z")
                 {
@@ -21,6 +21,10 @@ namespace Project_Work
                 else if (txt == "c")
                 {
                     rep.Read();
+                }
+                else if(txt == "s")
+                {
+                    rep.Load();
                 }
                 else
                 {

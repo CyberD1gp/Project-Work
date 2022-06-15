@@ -76,6 +76,32 @@ namespace Project_Work
             }
         }
 
+        public void Load()
+        {
+            using(StreamReader lol = new StreamReader(this.path))
+            {
+
+                
+                
+                //с этой даты
+                DateTime from = new DateTime();
+                Console.WriteLine("Введите 1 дату");
+                from = Convert.ToDateTime(Console.ReadLine());
+
+                //по эту дату
+                DateTime to = new DateTime();
+                Console.WriteLine("Введите 2 дату");
+                to = Convert.ToDateTime(Console.ReadLine());
+
+
+
+                
+                      
+                            
+
+            }
+        }
+
 
     }
 
