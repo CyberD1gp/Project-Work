@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace Project_Work
 {
@@ -8,6 +9,7 @@ namespace Project_Work
         private string path;
         private string[] titles;        
         public Worker[] workers;
+        
 
         public Rep(string Path)
         {
@@ -84,14 +86,19 @@ namespace Project_Work
                 
                 
                 //с этой даты
-                DateTime from = new DateTime();
+                
                 Console.WriteLine("Введите 1 дату");
-                from = Convert.ToDateTime(Console.ReadLine());
+                DateTime dataFrom = Convert.ToDateTime(Console.ReadLine());
 
                 //по эту дату
-                DateTime to = new DateTime();
+                
                 Console.WriteLine("Введите 2 дату");
-                to = Convert.ToDateTime(Console.ReadLine());
+                DateTime dataTo = Convert.ToDateTime(Console.ReadLine());
+
+                workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
+
+                
+
 
 
 
@@ -102,7 +109,34 @@ namespace Project_Work
             }
         }
 
+        public void SortedToUpDate()
+        {
+            workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
+            foreach(var worker in workers)
+            {
+                Console.WriteLine(worker.ID + " " +
+                    worker.Name + " " +
+                    worker.Age + " " +
+                    worker.Growth + " " +
+                    worker.DateOfBirth + " " +
+                    worker.PlaceOfBirth);
 
+            }
+            
+        }
+        public void SortedToDownDate()
+        {
+            workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
+            foreach(var worker in workers) 
+            {
+                Console.WriteLine(worker.ID + " " +
+                    worker.Name + " " +
+                    worker.Age + " " +
+                    worker.Growth + " " +
+                    worker.DateOfBirth + " " +
+                    worker.PlaceOfBirth);
+            }
+        }
     }
 
 }
