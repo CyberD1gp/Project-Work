@@ -1,48 +1,45 @@
 ﻿using System;
+using System.IO;
 
 namespace Project_Work
 {
-    internal class Program
+    internal class program
     {
         static void Main(string[] args)
         {
-            string path = @"Zametka.txt";
-            Rep rep = new Rep(path);
-
+            Methods methods = new Methods();
 
             while (true)
             {
+                
                 string txt;
-                Console.WriteLine("\nвведите Запись(1) ," +
-                    " \nЧтение(2) ," +
-                    " \nСортировка дат в диапозоне(3)" +
-                    " \nСортировка по возрастанию дат(4)" +
-                    " \nСортировка по убыванию дат(5) ");
+                Console.WriteLine("\nвведите запись(1) ," +
+                    " \nчтение(2) ," +
+                    " \nсортировка дат в диапозоне(3)" +
+                    " \nсортировка по возрастанию дат(4)" +
+                    " \nсортировка по убыванию дат(5) ");
                 txt = Console.ReadLine();
                 if (txt == "1")
                 {
-                    rep.Records();
+                    methods.Record();
                 }
                 else if (txt == "2")
                 {
-                    rep.Read();
+                    methods.Read();
                 }
                 else if (txt == "3")
                 {
-                    rep.Load();
+                    methods.SortedToDateDiapason();
                 }
                 else if (txt == "4")
                 {
-                    rep.SortedToUpDate();
+                    methods.SortedToDate();
                 }
-                else if(txt == "5")
+                else if (txt == "5")
                 {
-                    rep.SortedToDownDate();
+                    methods.SortedToDateDown();
                 }
-                else
-                {
-                    Console.WriteLine("введите Запись(z) или  Чтение(c)");
-                }
+              
 
 
 

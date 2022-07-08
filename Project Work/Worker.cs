@@ -6,7 +6,7 @@ namespace Project_Work
     struct Worker
     {
         #region Поля
-        public string ID;
+        public int ID;
         public string Name;
         public int Age;
         public int Growth;
@@ -20,7 +20,7 @@ namespace Project_Work
         /// <param name="Growth">Рост</param>
         /// <param name="DateOfBirth">Дата рождения</param>
         /// <param name="PlaceOfBirth">Место рождения</param>     
-        public Worker(string ID, string Name, int Age,int Growth, DateTime DateOfBirth , string PlaceOfBirth)
+        public Worker(int ID, string Name, int Age,int Growth, DateTime DateOfBirth , string PlaceOfBirth)
         {
             this.ID = ID;
             this.Name = Name;

@@ -1,142 +1,97 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.IO;
+using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Project_Work
 {
-    struct Rep
+    class Rep
     {
-        private string path;
-        private string[] titles;        
-        public Worker[] workers;
-        
+        public List<Worker> _workers { get; set; }
 
-        public Rep(string Path)
+        public Rep()
         {
-            this.path = Path;
-            this.titles = new string[6];
-            this.workers = new Worker[6];
-            
+            _workers = new List<Worker>();
+            _workers = GetWorkersFromTxt();
+
         }
 
-        #region Запись
-        public void Records()
+        public List<Worker> GetWorkers()
         {
+            return _workers;
+        }
 
-            using (StreamWriter zametka = new StreamWriter(this.path, append: true))
+        public void Create(Worker worker)
+        {
+            _workers.Add(worker);
+        }
+
+        public void Update(Worker worker)
+        {
+            var oldWorker = _workers
+                .FirstOrDefault(i => i.ID == worker.ID);
+            _workers.Remove(oldWorker);
+            _workers.Add(worker);
+        }
+
+        public void Delete(Worker worker)
+        {
+            var oldWorker = _workers
+                .FirstOrDefault(i => i.ID == worker.ID);
+            _workers.Remove(oldWorker);
+
+        }
+
+        public List<Worker> GetWorkersFromTxt()
+        {
+            var workers = new List<Worker>();
+            string[] workersTxt = File.ReadAllLines("Book.txt");
+
+            foreach (string workersTxtString in workersTxt)
             {
-                char key = 'д';
+                var worker = GetWorkersFromTxtString(workersTxtString);
+                workers.Add(worker);
+            }
+            return workers;
+        }
 
-                do
-                {
-                    Worker worker = new Worker();
-                    Random random = new Random();
-                    worker.ID = random.Next().ToString();
+        public Worker GetWorkersFromTxtString(string workersTxtStrings)
+        {
+            string[] massive = workersTxtStrings.Split('#');
+            int ID = Convert.ToInt32(massive[0]);
+            string Name = massive[1];
+            int Age = Convert.ToInt32(massive[2]);
+            int Growth = Convert.ToInt32(massive[3]);
+            DateTime DateOfBirth = Convert.ToDateTime(massive[4]);
+            string PlaceOfBirth = massive[5];
 
+            var worker = new Worker(ID, Name, Age, Growth, DateOfBirth, PlaceOfBirth);
+            return worker;
+        }
 
-                    Console.WriteLine("\nВведите ФИО: ");
-                    worker.Name += $"{Console.ReadLine()}#";
-
-                    Console.WriteLine("\nВведите возраст: ");
-                    worker.Age = Convert.ToInt32(Console.ReadLine());
-
-                    Console.WriteLine("\nВведите рост: ");
-                    worker.Growth = Convert.ToInt32(Console.ReadLine());
-
-                    Console.WriteLine("\nВведите дату рождения:");
-                    worker.DateOfBirth = Convert.ToDateTime(Console.ReadLine());
-
-                    Console.WriteLine("\nВведите место рождения: ");
-                    worker.PlaceOfBirth = $"{Console.ReadLine()}#";
-
-                    zametka.WriteLine(worker.Print());
-
-                    Console.Write("Продолжить н/д?");
-                    key = Console.ReadKey(true).KeyChar;
-
-                }
-                while (char.ToLower(key) == 'д');
+        public void Save()
+        {
+            using (StreamWriter vs = new StreamWriter("Book.txt", false))
+            {
+                foreach (Worker worker in _workers)
+                    vs.WriteLine(worker.ID + "#" +
+                        worker.Name + "#" +
+                        worker.Age + "#" +
+                        worker.Growth + "#" +
+                        worker.DateOfBirth + "#" +
+                        worker.PlaceOfBirth);
 
             }
+
         }
 
-        #endregion
-        public void Read()
+        public Worker GewWorkerByID(int ID)
         {
-            using (StreamReader zametka = new StreamReader(this.path))
-            {
-                string line;
-                Console.WriteLine($"{"ID"} {"Name"} {"Age"} {"Growth"} {"DateOfBirth"} {"PlaceOfBirth"}");
-
-
-                while ((line = zametka.ReadLine()) != null)
-                {
-                    string[] data = line.Split('\t');
-                    Console.WriteLine($"{data[0]}");
-                }
-
-            }
+            return _workers.FirstOrDefault(i => i.ID == ID);
         }
 
-        public void Load()
-        {
-            using(StreamReader lol = new StreamReader(this.path))
-            {
-
-                
-                
-                //с этой даты
-                
-                Console.WriteLine("Введите 1 дату");
-                DateTime dataFrom = Convert.ToDateTime(Console.ReadLine());
-
-                //по эту дату
-                
-                Console.WriteLine("Введите 2 дату");
-                DateTime dataTo = Convert.ToDateTime(Console.ReadLine());
-
-                workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
-
-                
-
-
-
-
-                
-                      
-                            
-
-            }
-        }
-
-        public void SortedToUpDate()
-        {
-            workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
-            foreach(var worker in workers)
-            {
-                Console.WriteLine(worker.ID + " " +
-                    worker.Name + " " +
-                    worker.Age + " " +
-                    worker.Growth + " " +
-                    worker.DateOfBirth + " " +
-                    worker.PlaceOfBirth);
-
-            }
-            
-        }
-        public void SortedToDownDate()
-        {
-            workers = workers.OrderBy(i => i.DateOfBirth).ToArray();
-            foreach(var worker in workers) 
-            {
-                Console.WriteLine(worker.ID + " " +
-                    worker.Name + " " +
-                    worker.Age + " " +
-                    worker.Growth + " " +
-                    worker.DateOfBirth + " " +
-                    worker.PlaceOfBirth);
-            }
-        }
     }
-
 }
