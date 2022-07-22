@@ -48,7 +48,10 @@ namespace Project_Work
         public List<Worker> GetWorkersFromTxt()
         {
             var workers = new List<Worker>();
+
+            File.Exists("Book.txt");
             string[] workersTxt = File.ReadAllLines("Book.txt");
+
 
             foreach (string workersTxtString in workersTxt)
             {
@@ -56,6 +59,7 @@ namespace Project_Work
                 workers.Add(worker);
             }
             return workers;
+            
         }
 
         public Worker GetWorkersFromTxtString(string workersTxtStrings)
